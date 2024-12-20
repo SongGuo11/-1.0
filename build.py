@@ -5,8 +5,22 @@ import subprocess
 
 def install_requirements():
     """安装所需的依赖"""
-    print("正在安装依赖...")
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "-r", "requirements.txt"])
+    try:
+        # 直接安装必需的包，不依赖 requirements.txt
+        packages = [
+            'Pillow>=10.0.0',
+            'piexif>=1.1.3',
+            'pyinstaller>=5.0.0'
+        ]
+        
+        print("正在安装依赖...")
+        for package in packages:
+            subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+        print("依赖安装完成！")
+        return True
+    except Exception as e:
+        print(f"安装依赖时出错: {str(e)}")
+        return False
 
 def create_build():
     """创建可执行文件"""
@@ -15,7 +29,7 @@ def create_build():
     # 获取当前目录
     current_dir = os.path.dirname(os.path.abspath(__file__))
     
-    # 先创建图标
+    # 创建图标
     if not os.path.exists('icon.ico'):
         from create_icon import create_icon
         create_icon()
@@ -27,7 +41,6 @@ def create_build():
         '--windowed',  # 使用 GUI 模式
         '--onefile',  # 打包成单个文件
         '--icon=icon.ico',  # 使用生成的图标
-        '--add-data=README.txt;.',  # 添加说明文件
         '--clean',  # 清理临时文件
         f'--distpath={os.path.join(current_dir, "dist")}',  # 输出目录
         '--noconfirm',  # 不确认覆盖
@@ -40,7 +53,10 @@ def create_build():
 def main():
     try:
         # 安装依赖
-        install_requirements()
+        if not install_requirements():
+            print("\n安装依赖失败，程序终止")
+            input("\n按回车键退出...")
+            sys.exit(1)
         
         # 创建构建
         create_build()
