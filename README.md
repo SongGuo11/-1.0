@@ -15,13 +15,13 @@
 ## 下载和使用
 
 ### 方式一：直接使用（推荐）
-1. 在 [Releases](https://github.com/你的用户名/image-metadata-editor/releases) 页面下载最新版本
+1. 在 [Releases](https://github.com/SongGuo11/image-metadata-editor/releases) 页面下载最新版本
 2. 解压后直接运行 `图片元数据编辑器.exe`
 
 ### 方式二：从源码运行
 1. 克隆仓库：
    ```bash
-   git clone https://github.com/你的用户名/image-metadata-editor.git
+   git clone https://github.com/SongGuo11/image-metadata-editor.git
    ```
 2. 安装依赖：
    ```bash
